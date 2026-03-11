@@ -1,3 +1,5 @@
+// ─── Student & Auth ───────────────────────────────────────────────────────────
+
 export interface StudentDto {
   id: string;
   studentId: string;
@@ -29,6 +31,8 @@ export interface RegisterData {
   password: string;
   confirmPassword: string;
 }
+
+// ─── UI ───────────────────────────────────────────────────────────────────────
 
 export interface NavItem {
   id: string;

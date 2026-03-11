@@ -1,37 +1,37 @@
-import type { StatCard, StudentDto } from "../types/types";
+import { useLang } from "../context/LangContext";
+import type { StudentDto, StatCard } from "../types";
+
+// ─── Props ────────────────────────────────────────────────────────────────────
 
 interface OverviewPageProps {
   student: StudentDto;
 }
 
-export default function OverviewPage({ student }: OverviewPageProps) {
+// ─── Component ────────────────────────────────────────────────────────────────
+
+export function OverviewPage({ student }: OverviewPageProps) {
+  const { t } = useLang();
+
   const statCards: StatCard[] = [
-    { icon: "📚", val: "6", label: "Enrolled Courses" },
-    { icon: "⭐", val: "3.7", label: "Current GPA" },
-    { icon: "✅", val: "92%", label: "Attendance" },
-    { icon: "💳", val: "$0", label: "Outstanding Fees" },
+    { icon: "📚", val: "6",   label: t.enrolledCourses },
+    { icon: "⭐", val: "3.7", label: t.currentGpa },
+    { icon: "✅", val: "92%", label: t.attendance },
+    { icon: "💳", val: "$0",  label: t.outstandingFees },
   ];
 
   return (
     <>
       <div className="welcome-card">
         <div>
-          <div className="welcome-name">
-            Good day, {student?.firstName ?? "Student"}! 👋
-          </div>
-          <div className="welcome-sub">
-            Here's your academic overview for this semester.
-          </div>
+          <div className="welcome-name">{t.goodDay}, {student?.firstName ?? "Student"}! 👋</div>
+          <div className="welcome-sub">{t.overviewSubtitle}</div>
           <div className="welcome-meta">
-            <span className="meta-pill">
-              📧 {student?.email ?? "student@uni.edu"}
-            </span>
-            <span className="meta-pill">
-              🪪 {student?.studentId ?? "STU-0000"}
-            </span>
+            <span className="meta-pill">📧 {student?.email ?? "student@uni.edu"}</span>
+            <span className="meta-pill">🪪 {student?.studentId ?? "STU-0000"}</span>
           </div>
         </div>
       </div>
+
       <div className="stats-grid">
         {statCards.map((s) => (
           <div className="stat-card" key={s.label}>
@@ -41,12 +41,10 @@ export default function OverviewPage({ student }: OverviewPageProps) {
           </div>
         ))}
       </div>
+
       <div className="info-box">
-        <strong>🚀 Getting Started:</strong> This dashboard is connected to your
-        C# JWT backend. Use the sidebar to explore modules. Check the{" "}
-        <strong>Auth Token</strong> tab to inspect your JWT. Each API request
-        automatically includes your token in the{" "}
-        <code>Authorization: Bearer &lt;token&gt;</code> header.
+        <strong>{t.gettingStarted}</strong> {t.gettingStartedDesc}{" "}
+        <code>Authorization: Bearer &lt;token&gt;</code>
       </div>
     </>
   );

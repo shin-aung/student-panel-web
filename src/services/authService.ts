@@ -1,4 +1,4 @@
-import type { AuthResponse, RegisterData, StudentDto } from "../types/types"
+import type { AuthResponse, StudentDto, RegisterData } from "../types";
 
 const API_BASE = import.meta.env.VITE_API_URL;
 
@@ -9,10 +9,8 @@ export const authService = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-
     if (!res.ok) throw new Error((await res.json()).message || "Login failed");
-
-    return res.json();
+    return res.json() as Promise<AuthResponse>;
   },
 
   async register(data: Omit<RegisterData, "confirmPassword">): Promise<AuthResponse> {
@@ -21,13 +19,11 @@ export const authService = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-
     if (!res.ok) throw new Error((await res.json()).message || "Registration failed");
-
-    return res.json();
+    return res.json() as Promise<AuthResponse>;
   },
 
-  logout() {
+  logout(): void {
     localStorage.removeItem("jwt_token");
     localStorage.removeItem("student");
   },
@@ -37,6 +33,6 @@ export const authService = {
   },
 
   getStudent(): StudentDto | null {
-    return JSON.parse(localStorage.getItem("student") || "null");
+    return JSON.parse(localStorage.getItem("student") || "null") as StudentDto | null;
   },
 };
