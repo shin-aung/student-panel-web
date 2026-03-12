@@ -25,10 +25,15 @@ export default function App() {
     <LangProvider>
       <style>{styles}</style>
       <div className="app">
-        {session
-          ? <Dashboard student={session.student} token={session.token} onLogout={handleLogout} />
-          : <LoginForm onSuccess={setSession} />
-        }
+        {session ? (
+          <Dashboard
+            student={session.student}
+            token={session.token}
+            onLogout={handleLogout}
+          />
+        ) : (
+          <LoginForm onSuccess={setSession} />
+        )}
       </div>
     </LangProvider>
   );

@@ -6,15 +6,11 @@ import { TokenPage } from "./TokenPage";
 import { PlaceholderPage } from "./PlaceholderPage";
 import type { StudentDto, NavItem } from "../types";
 
-// ─── Props ────────────────────────────────────────────────────────────────────
-
 interface DashboardProps {
   student: StudentDto;
   token: string;
   onLogout: () => void;
 }
-
-// ─── Component ────────────────────────────────────────────────────────────────
 
 export function Dashboard({ student, token, onLogout }: DashboardProps) {
   const { t } = useLang();
@@ -23,11 +19,11 @@ export function Dashboard({ student, token, onLogout }: DashboardProps) {
   const initials = `${student?.firstName?.[0] ?? "S"}${student?.lastName?.[0] ?? ""}`;
 
   const navItems: NavItem[] = [
-    { id: "overview", icon: "🏠", label: t.overview },
-    { id: "courses",  icon: "📚", label: t.myCourses },
-    { id: "schedule", icon: "📅", label: t.schedule },
-    { id: "grades",   icon: "📊", label: t.grades },
-    { id: "token",    icon: "🔐", label: t.authToken },
+    { id: "overview", icon: "🏠", label: t.dashboard.overview },
+    { id: "courses", icon: "📚", label: t.dashboard.myCourses },
+    { id: "schedule", icon: "📅", label: t.dashboard.schedule },
+    { id: "grades", icon: "📊", label: t.dashboard.grades },
+    { id: "token", icon: "🔐", label: t.dashboard.authToken },
   ];
 
   const activeLabel = navItems.find((n) => n.id === active)?.label ?? "";
@@ -40,12 +36,12 @@ export function Dashboard({ student, token, onLogout }: DashboardProps) {
           <div className="logo-icon">🎓</div>
           <div>
             <div className="logo-text">UniPortal</div>
-            <div className="logo-sub">{t.studentPanel}</div>
+            <div className="logo-sub">{t.dashboard.studentPanel}</div>
           </div>
         </div>
 
         <div className="sidebar-nav">
-          <div className="nav-section">{t.mainNav}</div>
+          <div className="nav-section">{t.dashboard.mainNav}</div>
           {navItems.map((n) => (
             <div
               key={n.id}
@@ -61,11 +57,15 @@ export function Dashboard({ student, token, onLogout }: DashboardProps) {
           <div className="user-card">
             <div className="user-avatar">{initials}</div>
             <div>
-              <div className="user-name">{student?.firstName} {student?.lastName}</div>
+              <div className="user-name">
+                {student?.firstName} {student?.lastName}
+              </div>
               <div className="user-id">{student?.studentId ?? "Student"}</div>
             </div>
           </div>
-          <button className="logout-btn" onClick={onLogout}>{t.signOut}</button>
+          <button className="logout-btn" onClick={onLogout}>
+            {t.global.signOut}
+          </button>
         </div>
       </div>
 
@@ -75,16 +75,34 @@ export function Dashboard({ student, token, onLogout }: DashboardProps) {
           <div className="page-title">{activeLabel}</div>
           <div className="topbar-right">
             <LangSwitcher variant="light" />
-            <span className="badge">{t.semester}</span>
+            <span className="badge">{t.global.semester}</span>
           </div>
         </div>
 
         <div className="content-area">
           {active === "overview" && <OverviewPage student={student} />}
-          {active === "token"    && <TokenPage token={token} />}
-          {active === "courses"  && <PlaceholderPage icon="📚" title={t.myCourses}  desc={t.coursesDesc} />}
-          {active === "schedule" && <PlaceholderPage icon="📅" title={t.schedule}   desc={t.scheduleDesc} />}
-          {active === "grades"   && <PlaceholderPage icon="📊" title={t.grades}     desc={t.gradesDesc} />}
+          {active === "token" && <TokenPage token={token} />}
+          {active === "courses" && (
+            <PlaceholderPage
+              icon="📚"
+              title={t.dashboard.myCourses}
+              desc={t.placeholder.coursesDesc}
+            />
+          )}
+          {active === "schedule" && (
+            <PlaceholderPage
+              icon="📅"
+              title={t.dashboard.schedule}
+              desc={t.placeholder.scheduleDesc}
+            />
+          )}
+          {active === "grades" && (
+            <PlaceholderPage
+              icon="📊"
+              title={t.dashboard.grades}
+              desc={t.placeholder.gradesDesc}
+            />
+          )}
         </div>
       </div>
     </div>

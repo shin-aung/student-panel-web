@@ -6,8 +6,8 @@ import my from "./my.json";
 export type Lang = "en" | "my";
 
 // ─── Translations Type ────────────────────────────────────────────────────────
-// Derived directly from en.json so the type always stays in sync
-// with the source file — no need to maintain a separate interface.
+// Derived directly from en.json — adding a key to en.json will automatically
+// cause a TypeScript error if my.json is not updated to match.
 
 export type Translations = typeof en;
 

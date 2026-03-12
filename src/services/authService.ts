@@ -13,13 +13,16 @@ export const authService = {
     return res.json() as Promise<AuthResponse>;
   },
 
-  async register(data: Omit<RegisterData, "confirmPassword">): Promise<AuthResponse> {
+  async register(
+    data: Omit<RegisterData, "confirmPassword">,
+  ): Promise<AuthResponse> {
     const res = await fetch(`${API_BASE}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    if (!res.ok) throw new Error((await res.json()).message || "Registration failed");
+    if (!res.ok)
+      throw new Error((await res.json()).message || "Registration failed");
     return res.json() as Promise<AuthResponse>;
   },
 
@@ -33,6 +36,8 @@ export const authService = {
   },
 
   getStudent(): StudentDto | null {
-    return JSON.parse(localStorage.getItem("student") || "null") as StudentDto | null;
+    return JSON.parse(
+      localStorage.getItem("student") || "null",
+    ) as StudentDto | null;
   },
 };

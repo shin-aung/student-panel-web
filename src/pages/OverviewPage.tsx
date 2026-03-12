@@ -1,33 +1,35 @@
 import { useLang } from "../context/LangContext";
 import type { StudentDto, StatCard } from "../types";
 
-// ─── Props ────────────────────────────────────────────────────────────────────
-
 interface OverviewPageProps {
   student: StudentDto;
 }
-
-// ─── Component ────────────────────────────────────────────────────────────────
 
 export function OverviewPage({ student }: OverviewPageProps) {
   const { t } = useLang();
 
   const statCards: StatCard[] = [
-    { icon: "📚", val: "6",   label: t.enrolledCourses },
-    { icon: "⭐", val: "3.7", label: t.currentGpa },
-    { icon: "✅", val: "92%", label: t.attendance },
-    { icon: "💳", val: "$0",  label: t.outstandingFees },
+    { icon: "📚", val: "6", label: t.overview.enrolledCourses },
+    { icon: "⭐", val: "3.7", label: t.overview.currentGpa },
+    { icon: "✅", val: "92%", label: t.overview.attendance },
+    { icon: "💳", val: "$0", label: t.overview.outstandingFees },
   ];
 
   return (
     <>
       <div className="welcome-card">
         <div>
-          <div className="welcome-name">{t.goodDay}, {student?.firstName ?? "Student"}! 👋</div>
-          <div className="welcome-sub">{t.overviewSubtitle}</div>
+          <div className="welcome-name">
+            {t.overview.goodDay}, {student?.firstName ?? "Student"}! 👋
+          </div>
+          <div className="welcome-sub">{t.overview.subtitle}</div>
           <div className="welcome-meta">
-            <span className="meta-pill">📧 {student?.email ?? "student@uni.edu"}</span>
-            <span className="meta-pill">🪪 {student?.studentId ?? "STU-0000"}</span>
+            <span className="meta-pill">
+              📧 {student?.email ?? "student@uni.edu"}
+            </span>
+            <span className="meta-pill">
+              🪪 {student?.studentId ?? "STU-0000"}
+            </span>
           </div>
         </div>
       </div>
@@ -43,7 +45,8 @@ export function OverviewPage({ student }: OverviewPageProps) {
       </div>
 
       <div className="info-box">
-        <strong>{t.gettingStarted}</strong> {t.gettingStartedDesc}{" "}
+        <strong>{t.overview.gettingStarted}</strong>{" "}
+        {t.overview.gettingStartedDesc}{" "}
         <code>Authorization: Bearer &lt;token&gt;</code>
       </div>
     </>
